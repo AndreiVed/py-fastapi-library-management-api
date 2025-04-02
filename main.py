@@ -63,7 +63,7 @@ def create_author(
     if db_author:
         raise HTTPException(
             status_code=404,
-            detail="Author with such name is already exist."
+            detail="Book with such title is already exist."
         )
 
     return crud.create_author(db=db, author=author)
@@ -73,7 +73,7 @@ def create_author(
 def get_books(
         page: int = Query(1, ge=1),
         per_page: int = Query(10, ge=1, le=20),
-        author_id: str | None = None,
+        author_id: int | None = None,
         db: Session = Depends(get_db),
 ):
     total_items = crud.get_total_books_count(db)
@@ -88,8 +88,8 @@ def get_books(
         limit=per_page,
         author_id=author_id)
 
-    prev_page = f"/authors/?page={page-1}&per_page={per_page}" if page > 1 else None
-    next_page = f"/authors/?page={page+1}&per_page={per_page}" if page < total_pages else None
+    prev_page = f"/books/?page={page-1}&per_page={per_page}" if page > 1 else None
+    next_page = f"/books/?page={page+1}&per_page={per_page}" if page < total_pages else None
 
     return BookList(
         books=books,
