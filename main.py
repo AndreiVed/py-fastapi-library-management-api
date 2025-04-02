@@ -62,8 +62,8 @@ def create_author(
     db_author = crud.get_author_by_name(db=db, name=author.name)
     if db_author:
         raise HTTPException(
-            status_code=404,
-            detail="Book with such title is already exist."
+            status_code=400,
+            detail="Author with such title is already exist."
         )
 
     return crud.create_author(db=db, author=author)
@@ -119,8 +119,8 @@ def create_book(
 
     if db_book:
         raise HTTPException(
-            status_code=404,
-            detail="Author with such name is already exist."
+            status_code=400,
+            detail="Book with such name is already exist."
         )
 
     return crud.create_book(db=db, book=book)
